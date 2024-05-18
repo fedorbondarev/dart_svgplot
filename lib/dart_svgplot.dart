@@ -285,8 +285,9 @@ class SvgGraphAxis {
         'y': '${xlabelAbsolutePosition.y}',
         'vector-effect': "non-scaling-stroke",
         'xml-space': 'preserve',
-        'dominant-baseline': 'middle',
-        'text-anchor': 'middle',
+        // 'dominant-baseline': 'middle',
+        // 'text-anchor': 'middle',
+        'translate': '0% 0%',
       }, nest: () {
         builder.text(xlabel);
       });
@@ -307,8 +308,9 @@ class SvgGraphAxis {
         'y': '${ylabelAbsolutePosition.y}',
         'vector-effect': "non-scaling-stroke",
         'xml-space': 'preserve',
-        'dominant-baseline': 'middle',
-        'text-anchor': 'middle',
+        // 'dominant-baseline': 'middle',
+        // 'text-anchor': 'middle',
+        'translate': '0% 0%',
       }, nest: () {
         builder.text(ylabel);
       });
@@ -368,13 +370,23 @@ class SvgGraphAxis {
       AxisSide.bottom => 'hanging',
       AxisSide.left || AxisSide.right => 'middle',
     };
-    String textAnchor =
-        // switch (axisSide) {
-        //   AxisSide.left => 'end',
-        //   AxisSide.right => 'start',
-        //   AxisSide.top || AxisSide.bottom => 'middle',
-        // };
-        'end';
+    String textAnchor = switch (axisSide) {
+      AxisSide.left => 'end',
+      AxisSide.right => 'start',
+      AxisSide.top || AxisSide.bottom => 'middle',
+    };
+
+    String yTranslate = switch (axisSide) {
+      AxisSide.top => '-50%',
+      AxisSide.bottom => '50%',
+      AxisSide.left || AxisSide.right => '0%',
+    };
+
+    String xTranslate = switch (axisSide) {
+      AxisSide.left => '-50%',
+      AxisSide.right => '50%',
+      AxisSide.top || AxisSide.bottom => '0%',
+    };
 
     builder.element(
       'path',
@@ -402,9 +414,9 @@ class SvgGraphAxis {
           // 'style': asCssString(textStyle),
           'vector-effect': "non-scaling-stroke",
           'xml-space': 'preserve',
-          'dominant-baseline': dominantBaseline,
-          'text-anchor': textAnchor,
-          'transform': 'rotate(-90 ${tickStart.x} ${tickStart.y})',
+          // 'dominant-baseline': dominantBaseline,
+          // 'text-anchor': textAnchor,
+          'translate': '$xTranslate $yTranslate',
         }, nest: () {
           builder.text(labelTextGenerator(where.toDouble(), axisInfo));
         });
