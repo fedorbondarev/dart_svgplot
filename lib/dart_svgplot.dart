@@ -287,7 +287,7 @@ class SvgGraphAxis {
         'xml-space': 'preserve',
         // 'dominant-baseline': 'middle',
         // 'text-anchor': 'middle',
-        'translate': '0% 0%',
+        'transform': 'translate(0%, 0%)'
       }, nest: () {
         builder.text(xlabel);
       });
@@ -310,7 +310,7 @@ class SvgGraphAxis {
         'xml-space': 'preserve',
         // 'dominant-baseline': 'middle',
         // 'text-anchor': 'middle',
-        'translate': '0% 0%',
+        'transform': 'translate(0%, 0%)'
       }, nest: () {
         builder.text(ylabel);
       });
@@ -416,7 +416,7 @@ class SvgGraphAxis {
           'xml-space': 'preserve',
           // 'dominant-baseline': dominantBaseline,
           // 'text-anchor': textAnchor,
-          'translate': '$xTranslate $yTranslate',
+          'transform': 'translate($xTranslate, $yTranslate)'
         }, nest: () {
           builder.text(labelTextGenerator(where.toDouble(), axisInfo));
         });
