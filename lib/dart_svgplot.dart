@@ -404,6 +404,7 @@ class SvgGraphAxis {
           'xml-space': 'preserve',
           'dominant-baseline': dominantBaseline,
           'text-anchor': textAnchor,
+          'transform': 'rotate(-90 ${tickStart.x} ${tickStart.y})',
         }, nest: () {
           builder.text(labelTextGenerator(where.toDouble(), axisInfo));
         });
