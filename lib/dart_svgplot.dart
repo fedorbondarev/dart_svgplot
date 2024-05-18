@@ -376,14 +376,14 @@ class SvgGraphAxis {
     };
 
     String yTranslate = switch (axisSide) {
-      AxisSide.top => '0',
-      AxisSide.bottom => '0',
+      AxisSide.top => '-50',
+      AxisSide.bottom => '50',
       AxisSide.left || AxisSide.right => '0',
     };
 
     String xTranslate = switch (axisSide) {
-      AxisSide.left => '0',
-      AxisSide.right => '0',
+      AxisSide.left => '-50',
+      AxisSide.right => '50',
       AxisSide.top || AxisSide.bottom => '0',
     };
 
