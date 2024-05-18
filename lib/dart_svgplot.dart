@@ -287,7 +287,7 @@ class SvgGraphAxis {
         'xml-space': 'preserve',
         // 'dominant-baseline': 'middle',
         // 'text-anchor': 'middle',
-        'transform': 'translate(0%, 0%)'
+        'transform': 'translate(0, 0)'
       }, nest: () {
         builder.text(xlabel);
       });
@@ -300,7 +300,6 @@ class SvgGraphAxis {
       'style': asCssString(labelTextStyle),
       'vector-effect': "non-scaling-stroke",
       'xml-space': 'preserve',
-      'transform': 'rotate(-90, ${ylabelAbsolutePosition.x}, ${ylabelAbsolutePosition.y})',
     }, nest: () {
       builder.element('tspan', attributes: {
         'id': tagGenerator.newTag('tspan'),
@@ -310,7 +309,7 @@ class SvgGraphAxis {
         'xml-space': 'preserve',
         // 'dominant-baseline': 'middle',
         // 'text-anchor': 'middle',
-        'transform': 'translate(0%, 0%)'
+        'transform': 'translate(0, 0)'
       }, nest: () {
         builder.text(ylabel);
       });
@@ -377,15 +376,15 @@ class SvgGraphAxis {
     };
 
     String yTranslate = switch (axisSide) {
-      AxisSide.top => '0%',
-      AxisSide.bottom => '0%',
-      AxisSide.left || AxisSide.right => '0%',
+      AxisSide.top => '0',
+      AxisSide.bottom => '0',
+      AxisSide.left || AxisSide.right => '0',
     };
 
     String xTranslate = switch (axisSide) {
-      AxisSide.left => '0%',
-      AxisSide.right => '0%',
-      AxisSide.top || AxisSide.bottom => '0%',
+      AxisSide.left => '0',
+      AxisSide.right => '0',
+      AxisSide.top || AxisSide.bottom => '0',
     };
 
     builder.element(
