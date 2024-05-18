@@ -277,7 +277,7 @@ class SvgGraphAxis {
       'y': '${xlabelAbsolutePosition.y}',
       'style': asCssString(labelTextStyle),
       'vector-effect': "non-scaling-stroke",
-      'xml-space': 'preserve'
+      'xml-space': 'preserve',
     }, nest: () {
       builder.element('tspan', attributes: {
         'id': tagGenerator.newTag('tspan'),
@@ -285,9 +285,7 @@ class SvgGraphAxis {
         'y': '${xlabelAbsolutePosition.y}',
         'vector-effect': "non-scaling-stroke",
         'xml-space': 'preserve',
-        // 'dominant-baseline': 'middle',
-        // 'text-anchor': 'middle',
-        'transform': 'translate(0, 0)'
+        'text-anchor': 'middle',
       }, nest: () {
         builder.text(xlabel);
       });
@@ -300,6 +298,7 @@ class SvgGraphAxis {
       'style': asCssString(labelTextStyle),
       'vector-effect': "non-scaling-stroke",
       'xml-space': 'preserve',
+      'transform': 'rotate(-90, ${ylabelAbsolutePosition.x}, ${ylabelAbsolutePosition.y})',
     }, nest: () {
       builder.element('tspan', attributes: {
         'id': tagGenerator.newTag('tspan'),
@@ -307,9 +306,7 @@ class SvgGraphAxis {
         'y': '${ylabelAbsolutePosition.y}',
         'vector-effect': "non-scaling-stroke",
         'xml-space': 'preserve',
-        // 'dominant-baseline': 'middle',
-        // 'text-anchor': 'middle',
-        'transform': 'translate(0, 0)'
+        'text-anchor': 'middle',
       }, nest: () {
         builder.text(ylabel);
       });
@@ -364,11 +361,7 @@ class SvgGraphAxis {
       TickDirection.outward => tickPointAbsolute,
       TickDirection.symmetric => tickPointAbsolute - tickShift,
     };
-    String dominantBaseline = switch (axisSide) {
-      AxisSide.top => 'text-top',
-      AxisSide.bottom => 'hanging',
-      AxisSide.left || AxisSide.right => 'middle',
-    };
+
     String textAnchor = switch (axisSide) {
       AxisSide.left => 'end',
       AxisSide.right => 'start',
@@ -376,15 +369,9 @@ class SvgGraphAxis {
     };
 
     String yTranslate = switch (axisSide) {
-      AxisSide.top => '-50',
-      AxisSide.bottom => '50',
-      AxisSide.left || AxisSide.right => '0',
-    };
-
-    String xTranslate = switch (axisSide) {
-      AxisSide.left => '-50',
-      AxisSide.right => '50',
-      AxisSide.top || AxisSide.bottom => '0',
+      AxisSide.top => '-0.35em',
+      AxisSide.bottom => '0.7em',
+      AxisSide.left || AxisSide.right => '0.35em',
     };
 
     builder.element(
@@ -404,18 +391,16 @@ class SvgGraphAxis {
         'y': '${(tickStart - labelShift).y}',
         'style': asCssString(tickLabelTextStyle),
         'vector-effect': "non-scaling-stroke",
-        'xml-space': 'preserve'
+        'xml-space': 'preserve',
       }, nest: () {
         builder.element('tspan', attributes: {
           'id': tagGenerator.newTag('tspan'),
           'x': '${(tickStart - labelShift).x}',
           'y': '${(tickStart - labelShift).y}',
-          // 'style': asCssString(textStyle),
           'vector-effect': "non-scaling-stroke",
           'xml-space': 'preserve',
-          // 'dominant-baseline': dominantBaseline,
-          // 'text-anchor': textAnchor,
-          'transform': 'translate($xTranslate, $yTranslate)'
+          'text-anchor': textAnchor,
+          'dy': yTranslate,
         }, nest: () {
           builder.text(labelTextGenerator(where.toDouble(), axisInfo));
         });
