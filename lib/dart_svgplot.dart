@@ -176,8 +176,8 @@ class SvgGraphAxis {
   Point xlabelRelativePositionInFigure = const Point(0.55, 0.02);
   Point ylabelRelativePositionInFigure = const Point(0.45, 0.02);
 
-  Map<String, String> labelTextStyle = {};
-  Map<String, String> tickLabelTextStyle = {};
+  final Map<String, String> labelTextStyle = {};
+  final Map<String, String> tickLabelTextStyle = {};
 
   SvgGraphAxis(this.parent);
 
@@ -368,10 +368,10 @@ class SvgGraphAxis {
       AxisSide.top || AxisSide.bottom => 'middle',
     };
 
-    String yTranslate = switch (axisSide) {
-      AxisSide.top => '-0.35em',
-      AxisSide.bottom => '0.7em',
-      AxisSide.left || AxisSide.right => '0.35em',
+    final yTranslate = switch (axisSide) {
+      AxisSide.top => '-0.55em',
+      AxisSide.bottom => '0.25em',
+      AxisSide.left || AxisSide.right => '0.2em',
     };
 
     builder.element(
@@ -389,6 +389,7 @@ class SvgGraphAxis {
         'id': tagGenerator.newTag('text'),
         'x': '${(tickStart - labelShift).x}',
         'y': '${(tickStart - labelShift).y}',
+        'dy': yTranslate,
         'style': asCssString(tickLabelTextStyle),
         'vector-effect': "non-scaling-stroke",
         'xml-space': 'preserve',
@@ -400,7 +401,6 @@ class SvgGraphAxis {
           'vector-effect': "non-scaling-stroke",
           'xml-space': 'preserve',
           'text-anchor': textAnchor,
-          'dy': yTranslate,
         }, nest: () {
           builder.text(labelTextGenerator(where.toDouble(), axisInfo));
         });
@@ -539,7 +539,7 @@ class SvgGraphPoint {
           'y': '${absolutePosition.y - markerSize / 2}',
           'style': asCssString(style),
           'vector-effect': "non-scaling-stroke",
-          if (clipPathTag != null) 'clip-path': 'url(#${clipPathTag})',
+          if (clipPathTag != null) 'clip-path': 'url(#$clipPathTag)',
         });
         break;
       case SvgGraphMarker.circle:
@@ -551,7 +551,7 @@ class SvgGraphPoint {
           'cy': '${absolutePosition.y}',
           'style': asCssString(style),
           'vector-effect': "non-scaling-stroke",
-          if (clipPathTag != null) 'clip-path': 'url(#${clipPathTag})',
+          if (clipPathTag != null) 'clip-path': 'url(#$clipPathTag)',
         });
         break;
       case SvgGraphMarker.point:
@@ -594,7 +594,7 @@ enum SvgGraphMarker {
 }
 
 String asCssString(Map<String, String>? css) =>
-    css == null ? '' : css.entries.map((MapEntry<String, String> e) => '${e.key}:${e.value}').join(';');
+    css == null ? '' : css.entries.map((MapEntry<String, String> e) => '${e.key}: ${e.value};').join();
 
 extension RelativeToRect on Rect {
   Rect relativeTo(Rect canvas) =>
